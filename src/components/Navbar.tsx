@@ -32,7 +32,9 @@ const Logout = () => {
 
     return (
         <>
-            <Image src={imageUrl} className="w-10 h-10 rounded-full" alt="profile" />
+            <div className="h-10 w-10 relative">
+                <Image src={imageUrl} width={"10"} height={"10"} alt="profile" layout={'responsive'} className="rounded-full " />
+            </div>
             <button className="pb-0 pt-1 px-4 bg-gray-200 rounded-md" onClick={() => signOut()}>ログアウト</button>
         </ >
     )

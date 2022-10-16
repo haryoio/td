@@ -4,7 +4,7 @@ import { trpc } from "../utils/trpc";
 import { Dialog, Transition } from "@headlessui/react"
 
 
-export const TodoList = () => {
+export const MyTodoList = () => {
     const todolist = trpc.todo.getAll.useQuery()
     const [isOpen, setIsOpen] = useState(false)
 
@@ -27,17 +27,25 @@ export const TodoList = () => {
             <div className="my-2" />
             <h2 className="font-black">未完了</h2>
             <hr />
-            <div>
-                {todolist.data?.filter(todo => !todo.completed).map(todo => <Item  {...todo} key={todo.id} />)}
-            </div>
+            <TodoList filterCb={(todo) => !todo.completed} todolist={todolist.data} />
             <div className="my-2" />
             <div className="font-black font-9xl">完了</div>
-            <div>
-                {todolist.data?.filter(todo => todo.completed).map(todo => <Item  {...todo} key={todo.id} />)}
-            </div>
+            <TodoList filterCb={(todo) => todo.completed} todolist={todolist.data} />
+
         </div>
     </>
     )
+}
+interface TodoListProps {
+    todolist?: Todo[],
+    filterCb?: (todo: Todo) => boolean
+}
+
+export const TodoList = ({ todolist, filterCb = () => true }: TodoListProps) => {
+    if (!todolist) return <></>
+    return <div className="overflow-scroll">
+        {todolist.filter(filterCb).map(todo => <Item  {...todo} key={todo.id} />)}
+    </div>
 }
 
 const Item = (props: Todo) => {
@@ -65,7 +73,7 @@ const TodoToggle = (props: Todo) => {
     }, [toggle, todolist])
 
     return (
-        <input type="checkbox" className="mb-1 mx-2" onClick={() => onToggleTodo(props.id, props.completed)} checked={props.completed} />
+        <input type="checkbox" className="mb-1 mx-2" onChange={() => onToggleTodo(props.id, props.completed)} checked={props.completed} defaultChecked={false} />
     )
 }
 

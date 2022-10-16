@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Navbar } from "../components/Navbar"
 import { Protected } from "../components/Protected";
-import { TodoList } from "../components/TodoList";
+import { MyTodoList } from "../components/TodoList";
 
 
 const Home: NextPage = () => {
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
       <main>
         <Navbar />
         <Protected>
-          <TodoList />
+          <MyTodoList />
         </Protected>
       </main>
     </>

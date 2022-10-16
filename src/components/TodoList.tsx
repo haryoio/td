@@ -6,7 +6,7 @@ import { Dialog, Transition } from "@headlessui/react"
 
 export const TodoList = () => {
     const todolist = trpc.todo.getAll.useQuery()
-    let [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     if (todolist.isLoading) {
         return <div>Loading...</div>
@@ -62,7 +62,7 @@ const TodoToggle = (props: Todo) => {
                 todolist.refetch();
             }
         })
-    }, [toggle])
+    }, [toggle, todolist])
 
     return (
         <input type="checkbox" className="mb-1 mx-2" onClick={() => onToggleTodo(props.id, props.completed)} checked={props.completed} />
@@ -79,7 +79,7 @@ const RemoveButton = (props: Todo) => {
                 todolist.refetch();
             }
         })
-    }, [remove])
+    }, [remove, todolist])
 
     return <button className="relative px-3 w-flex h-full" onClick={() => onRemoveTodo(props.id)}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 fill-red-400">
@@ -104,7 +104,7 @@ const NewTodoForm = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: Dispat
                 setIsOpen(false)
             }
         })
-    }, [content, show, create])
+    }, [content, show, create, setIsOpen])
 
     return (
         <Transition

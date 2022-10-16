@@ -1,5 +1,5 @@
-import { trpc } from "../utils/trpc";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 export const Navbar = () => {
     const { data: session } = useSession();
@@ -28,11 +28,11 @@ const Login = () => {
 const Logout = () => {
     const { data: session } = useSession();
 
-    const imageUrl = session?.user?.image ?? undefined
+    const imageUrl = session?.user?.image ?? ""
 
     return (
         <>
-            <img src={imageUrl} className="w-10 h-10 rounded-full" />
+            <Image src={imageUrl} className="w-10 h-10 rounded-full" alt="profile" />
             <button className="pb-0 pt-1 px-4 bg-gray-200 rounded-md" onClick={() => signOut()}>ログアウト</button>
         </ >
     )
